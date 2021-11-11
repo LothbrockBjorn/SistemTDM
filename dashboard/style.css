@@ -1,0 +1,40 @@
+.testi-item{
+    width: calc((80%/3) - 30px);
+    margin: 0 15px 30px;
+    border: 2px solid #000;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: #fff;
+}
+.testi-author{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.testi-author h3{
+    font-size: 16px;
+    text-transform: capitalize;
+
+}
+.testi-author span{
+    display: block;
+    font-size: 14px;
+    text-transform: capitalize;
+}
+.testi-author img{
+    max-width: 60px;
+    border-radius: 50%;
+    border: 3px solid var(--dark-light);
+    box-shadow: var(--shadow);
+    transition: border-color 0.5s ease;
+}
+.testi-item:hover .testi-author img{
+    border-color: var(--main-color);
+}
+.testi-item p{
+    margin: 15px 0;
+}
+.testi-item .ratings i{
+    max-width: 16px;
+    color: var(--main-color);
+}
