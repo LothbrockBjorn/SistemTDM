@@ -1,9 +1,9 @@
 <?php
 session_start();
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "dbasekpv2";
+$servername = "us-cdbr-east-04.cleardb.com";
+$username = "b4ee75cba9cbc3";
+$password = "bc8484ff";
+$dbname = "heroku_a169840466e5521";
 
 $conn = mysqli_connect($servername, $username, $password, $dbname) or die("Connection failed: " . mysqli_connect_error());
 
