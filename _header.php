@@ -72,7 +72,7 @@
                     <a href="<?=base_url('tmds/data.php');?>">Rekam TMD per matakuliah</a>
                 </li>
                 <li>
-                    <a href="<?=base_url('report/data.php');?>">Laporan TMD</a>
+                    <a href="<?=base_url('Report/data.php');?>">Laporan TMD</a>
                 </li>
                 <li>
                     <a href="<?=base_url('auth/logout.php');?>"><span class="text-danger">Log out</span></a>
