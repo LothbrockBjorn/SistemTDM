@@ -85,6 +85,8 @@ $tikb = 97;
 //set awal titik garis vertical dengan halaman tanpa header
 $tikav2 = 10;
 $tikbv2 = 18;
+//mendefinisikan value page berguna untuk parameter titik kordinat garis vertikal
+$page = 2;		
 $no=1;
 
 $sql_get_namadosen = mysqli_query($con, "SELECT * FROM tmdb join matkul on tmdb.id_matkul = matkul.id_matkul join dosen on tmdb.id_dosen = dosen.id_dosen WHERE tmdb.id_ta = '$ta' AND tmdb.kd_prodi = '$kd_prodi' AND tanggal BETWEEN '$tgl_a' AND '$tgl_b' group by (tmdb.id_dosen)")or die (mysqli_error($con));
@@ -114,27 +116,32 @@ while ($data_matkul = mysqli_fetch_array($sql_matkul)){
 			$sql_jtm = mysqli_query($con , "SELECT count(*) As jtm FROM tmdb where id_matkul = '$data_matkul[id_matkul]' and id_dosen = '$data[id_dosen]' and id_ta ='$ta' ")or die(mysqli_error($con));
 			$data_jtm = mysqli_fetch_assoc($sql_jtm);
 			$pdf->Cell(40,8,$data_jtm['jtm'],1,1,'C'); 
-			$pdf->Line(10,$tika,10,$tikb);
-			$pdf->Line(20,$tika,20,$tikb);
-			$pdf->Line(90,$tika,90,$tikb);
-			$pdf->Line(115,$tika,115,$tikb);
+			if ($pdf->pageNo() == 1) {
+				$pdf->Line(10,$tika,10,$tikb);
+				$pdf->Line(20,$tika,20,$tikb);
+				$pdf->Line(90,$tika,90,$tikb);
+				$pdf->Line(115,$tika,115,$tikb);
+			}elseif ($pdf->pageNo() > 1) { 
+			
+				$pdf->Line(10,$tikav2,10,$tikbv2);
+				$pdf->Line(20,$tikav2,20,$tikbv2);
+				$pdf->Line(90,$tikav2,90,$tikbv2);
+				$pdf->Line(115,$tikav2,115,$tikbv2);
+		}
 		}
 		else if(mysqli_num_rows($sql_matkul) > 1){
 			if ($jk > 1) {
 					//memberikan space dari nomor ke matakuliah jika matkul yang di ampu lebih dari 1
 					$pdf->Cell(150,8,'',0,0,'C');
-				}
-				//mendefinisikan value page berguna untuk parameter titik kordinat garis vertikal
-					$page = $pdf->PageNo();
-
+				}					
 				$pdf->Cell(70,8,$data_matkul['nama_matkul'],1,0,'C');
-				// $pdf->Cell(17,8,$data['sks'],1,0,'C'); 	
-				$pdf->Cell(17,8,$tika,1,0,'C'); 	
+				$pdf->Cell(17,8,$data['sks'],1,0,'C'); 	
+				// $pdf->Cell(17,8,$tikav2,1,0,'C'); 	
 				//select count data jtm
 				$sql_jtm = mysqli_query($con , "SELECT count(*) As jtm FROM tmdb where id_matkul = '$data_matkul[id_matkul]' and id_dosen = '$data[id_dosen]' and id_ta ='$ta' ")or die(mysqli_error($con));
 				$data_jtm = mysqli_fetch_assoc($sql_jtm);
-				// $pdf->Cell(40,8,$data_jtm['jtm'],1,1,'C'); 
-				$pdf->Cell(40,8,$tikb,1,1,'C'); 
+				$pdf->Cell(40,8,$data_jtm['jtm'],1,1,'C'); 
+				// $pdf->Cell(40,8,$tikb,1,1,'C'); 
 				// $pdf->Cell(8,1,$pdf->PageNo(),1,0,'C'); 
 				//vertical line untuk matakuliah yang lebih dari 1
 					if ($pdf->PageNo() == 1){
@@ -143,26 +150,26 @@ while ($data_matkul = mysqli_fetch_array($sql_matkul)){
 						$pdf->Line(90,$tika,90,$tikb);
 						$pdf->Line(115,$tika,115,$tikb);
 					}	
-					else if ($pdf->PageNo() > 1){
+					else if ($pdf->PageNo() > 1){  
+						if ($pdf->PageNo() != $page){ //perlu perbaikan untuk new value titik kordinat garis halaman baru
+							$tikav2 = 10;
+							$tikbv2 = 18;
+						}
 						$pdf->Line(10,$tikav2,10,$tikbv2);
 						$pdf->Line(20,$tikav2,20,$tikbv2);
 						$pdf->Line(90,$tikav2,90,$tikbv2);
 						$pdf->Line(115,$tikav2,115,$tikbv2);
+						
 					}
+
+					$page = $pdf->pageNo();
 		}
 			//penambahan nilai untuk titik
 			$tika = $tika+8;
 			$tikb = $tikb+8;
 
-			if ($pdf->PageNo() > 1){
-				if ($page == $pdf->PageNo()){ //perlu perbaikan untuk new value titik kordinat garis halaman baru
-					$tikav2 = $tikav2+8;
-					$tikbv2 = $tikbv2+8;	
-				}else{
-					$tikav2 = 10;
-					$tikbv2 = 18;
-				}  				
-			}
+			$tikav2 = $tikav2+8;
+			$tikbv2 = $tikbv2+8;
 
 			$jk++;
 		}

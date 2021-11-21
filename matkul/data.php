@@ -108,7 +108,7 @@
 	})
 
 	function hapus(){
-		var conf =confirm('yakin akan menghapus data ini?')
+		var conf =confirm('yakin ingin menghapus data yang di pilih?')
 		if(conf){
 		document.proses.action = 'del.php';
 		document.proses.submit();

@@ -85,13 +85,13 @@ while( $row=mysqli_fetch_array($query) ) {
 	$nestedData[] = $row["nama_prodi"];
 	$nestedData[] = $row["sem"]. ' / ' .$row["nama_ta"];
 	$nestedData[] = '<center>
-			<input type="button" name="detail" value="Detail" data-toggle="modal" data-target="#myModal" id="'.$row['id_tmdb'].'" class="btn btn-info btn-xs detail_data">
             <a href="edit.php?id='.$row['id_tmdb'].'" class="btn btn-warning btn-xs"><i class="glyphicon glyphicon-edit"></i></a>  
             <a href="del.php?id='.$row['id_tmdb'].'" class="btn btn-danger btn-xs"><i class="glyphicon glyphicon-trash"></i></a></center>';  
 	
 	$data[] = $nestedData;
 	$no++;
 }
+// <input type="button" name="detail" value="Detail" data-toggle="modal" data-target="#myModal" id="'.$row['id_tmdb'].'" class="btn btn-info btn-xs detail_data">
 //----------------------------------------------------------------------------------
 $json_data = array(
 	"draw"            => intval( $requestData['draw'] ),  
